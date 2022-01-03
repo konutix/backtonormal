@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/ideaFragment">
+
+    <fragment
+        android:id="@+id/ideaFragment"
+        android:name="com.mobilki.backtonormal.IdeaFragment"
+        android:label="fragment_idea"
+        tools:layout="@layout/fragment_idea" />
+    <fragment
+        android:id="@+id/tipsFragment"
+        android:name="com.mobilki.backtonormal.TipsFragment"
+        android:label="fragment_tips"
+        tools:layout="@layout/fragment_tips" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.mobilki.backtonormal.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.mobilki.backtonormal.StatsFragment"
+        android:label="fragment_stats"
+        tools:layout="@layout/fragment_stats" />
+    <fragment
+        android:id="@+id/activityList"
+        android:name="com.mobilki.backtonormal.activityList"
+        android:label="fragment_activity_list"
+        tools:layout="@layout/fragment_activity_list" />
+</navigation>
