@@ -29,5 +29,28 @@
         android:id="@+id/activityList"
         android:name="com.mobilki.backtonormal.activityList"
         android:label="fragment_activity_list"
-        tools:layout="@layout/fragment_activity_list" />
+        tools:layout="@layout/fragment_activity_list" >
+        <action
+            android:id="@+id/action_activityList_to_activityAddFragment"
+            app:destination="@id/activityAddFragment" />
+        <action
+            android:id="@+id/action_activityList_to_activitiesFragment"
+            app:destination="@id/activitiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/activityAddFragment"
+        android:name="com.mobilki.backtonormal.activityAddFragment"
+        android:label="activityAddFragment" >
+        <action
+            android:id="@+id/action_activityAddFragment_to_activitiesFragment"
+            app:destination="@id/activitiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/activitiesFragment"
+        android:name="com.mobilki.backtonormal.activitiesFragment"
+        android:label="activitiesFragment" >
+        <argument
+            android:name="activityId"
+            app:argType="integer" />
+    </fragment>
 </navigation>
