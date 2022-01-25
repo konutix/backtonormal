@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/drawable/circular_progressbar.xml" value="0.49375" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/layout/activity_main.xml" value="0.575" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/layout/fragment_activity.xml" value="0.575" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/layout/fragment_activity_add.xml" value="0.575" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/layout/fragment_activity_list.xml" value="0.5072916666666667" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/layout/fragment_idea.xml" value="0.5072916666666667" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/layout/fragment_stats.xml" value="0.47760416666666666" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal/backtonormal/app/src/main/res/layout/template_activity_preferred_list_row.xml" value="0.5072916666666667" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal2/app/src/main/res/drawable/circle_shape.xml" value="0.5911458333333334" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal2/app/src/main/res/drawable/circular_progressbar.xml" value="0.5911458333333334" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/backToNormal2/app/src/main/res/layout/activity_main.xml" value="0.33" />

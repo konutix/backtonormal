@@ -99,6 +99,10 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun isPreferred(id : Int) : Boolean {
         val query = "SELECT preferred FROM preferences WHERE activity=$id"
         var result = this.writableDatabase.rawQuery(query, null)
+        if (result.count < 1) {
+            return false
+        }
+
         result.moveToNext()
         return result.getInt(0) == 1
     }
