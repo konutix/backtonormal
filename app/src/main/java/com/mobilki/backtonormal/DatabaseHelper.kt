@@ -25,6 +25,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db?.execSQL("INSERT INTO activities (name, category) VALUES ('Meditation', (SELECT id FROM categories WHERE name='Mental'))")
 
         db?.execSQL("CREATE TABLE preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, activity INTEGER UNIQUE, preferred INTEGER, FOREIGN KEY(activity) REFERENCES activities(id))")
+
+        db?.execSQL("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT,task VARCHAR(256) ,task_description VARCHAR(256) UNIQUE, progress INTEGER, FOREIGN KEY(task) REFERENCES activities(name))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('do 100 repeats',0, (SELECT name FROM activities WHERE name='Push ups'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('read 25 pages',0, (SELECT name FROM activities WHERE name='Running'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('run 2500 meters',0, (SELECT name FROM activities WHERE name='Reading a book'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('meditate for 30 minutes',0, (SELECT name FROM activities WHERE name='Meditation'))")
+
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -55,6 +62,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             info.cat = result.getString(2)
             list.add(info)
         }
+
 
         return list
     }
@@ -106,6 +114,45 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         result.moveToNext()
         return result.getInt(0) == 1
     }
+
+    fun getAllTasks(): ArrayList<StatsInfo> {
+        val query = "SELECT A.id, A.task, A.task_description, A.progress FROM tasks as A"
+        var result = this.writableDatabase.rawQuery(query, null)
+
+        val list = ArrayList<StatsInfo>()
+        while (result.moveToNext()) {
+            var info = StatsInfo()
+            info.id = result.getInt(0)
+            info.taskName = result.getString(1)
+            info.taskDescription = result.getString(2)
+            info.progress = result.getInt(3)
+            list.add(info)
+        }
+        return list;
+    }
+    fun getTask(id : Int) : StatsInfo? {
+        val query = "SELECT A.task, A.task_description, A.progress FROM tasks as A"
+        var result = this.writableDatabase.rawQuery(query, null)
+
+        if (result.moveToNext()) {
+            var info = StatsInfo()
+            info.id = id
+            info.taskName = result.getString(0)
+            info.taskDescription = result.getString(1)
+            info.progress = result.getInt(2)
+            return info
+        }
+        return null
+    }
+    fun saveTaskToDataBase(statsInfo : StatsInfo){
+        var cv = ContentValues()
+        cv.put("id",statsInfo.id)
+        cv.put("task", statsInfo.taskName)
+        cv.put("task_description", statsInfo.taskDescription)
+        cv.put("progress", statsInfo.progress)
+        this.writableDatabase.replace("tasks", null, cv)
+    }
+
 
     fun test() {
         val query = "SELECT * FROM preferences";
