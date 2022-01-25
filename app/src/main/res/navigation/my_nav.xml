@@ -9,7 +9,11 @@
         android:id="@+id/ideaFragment"
         android:name="com.mobilki.backtonormal.IdeaFragment"
         android:label="fragment_idea"
-        tools:layout="@layout/fragment_idea" />
+        tools:layout="@layout/fragment_idea" >
+        <action
+            android:id="@+id/action_ideaFragment_to_activitiesFragment"
+            app:destination="@id/activitiesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tipsFragment"
         android:name="com.mobilki.backtonormal.TipsFragment"
