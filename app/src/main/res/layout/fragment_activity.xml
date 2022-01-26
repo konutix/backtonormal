@@ -189,7 +189,7 @@
                     android:insetBottom="0dp"
                     android:paddingLeft="0dp"
                     android:paddingTop="0dp"
-                    android:text="See statistics"
+                    android:text="Add to tasks"
                     android:textAlignment="viewStart"
                     app:icon="@android:drawable/ic_menu_set_as"
                     app:iconGravity="end"

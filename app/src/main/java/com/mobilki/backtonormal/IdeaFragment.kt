@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -65,6 +67,55 @@ class IdeaFragment : Fragment() {
             val bundle = bundleOf("activityId" to id)
             navc.navigate(R.id.action_ideaFragment_to_activitiesFragment, bundle)
         }
+
+        val allDaily = db.getDaily()
+
+        val daily1 = view.findViewById<CheckBox>(R.id.daily1)
+        val daily2 = view.findViewById<CheckBox>(R.id.daily2)
+        val daily3 = view.findViewById<CheckBox>(R.id.daily3)
+
+        daily1.text = allDaily.get(0).title
+        daily1.isChecked = allDaily.get(0).completed == 1
+        val daily1Id = allDaily.get(0)
+
+        daily2.text = allDaily.get(1).title
+        daily2.isChecked = allDaily.get(1).completed == 1
+        val daily2Id = allDaily.get(1)
+
+
+        daily3.text = allDaily.get(2).title
+        daily3.isChecked = allDaily.get(2).completed == 1
+        val daily3Id = allDaily.get(2)
+
+
+
+        daily1.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if(isChecked)
+                db.changeDailyState(daily1Id,1)
+            else
+                db.changeDailyState(daily1Id,0)
+
+        }
+
+        daily2.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if(isChecked)
+                db.changeDailyState(daily2Id,1)
+            else
+                db.changeDailyState(daily2Id,0)
+
+        }
+
+        daily3.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if(isChecked)
+                db.changeDailyState(daily3Id,1)
+            else
+                db.changeDailyState(daily3Id,0)
+
+        }
+
     }
 
     companion object {

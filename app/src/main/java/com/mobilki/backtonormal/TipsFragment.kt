@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +39,7 @@ class TipsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tips, container, false)
+
     }
 
     companion object {
@@ -55,5 +60,30 @@ class TipsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var db = DatabaseHelper(requireContext())
+        val allTips = db.getTips()
+
+        val title1 = view.findViewById<TextView>(R.id.title1)
+        val title2 = view.findViewById<TextView>(R.id.title2)
+        val title3 = view.findViewById<TextView>(R.id.title3)
+        val content1 = view.findViewById<TextView>(R.id.content1)
+        val content2 = view.findViewById<TextView>(R.id.content2)
+        val content3 = view.findViewById<TextView>(R.id.content3)
+
+        allTips.shuffle()
+
+        title1.text = allTips.get(0).title
+        title2.text = allTips.get(1).title
+        title3.text = allTips.get(2).title
+
+        content1.text = allTips.get(0).content
+        content2.text = allTips.get(1).content
+        content3.text = allTips.get(2).content
+
     }
 }

@@ -9,12 +9,12 @@
         android:id="@+id/frameLayout5"
         android:layout_width="390dp"
         android:layout_height="190dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
+        android:background="#DDDDDD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3"
-        android:background="#DDDDDD">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3">
 
         <FrameLayout
             android:layout_width="380dp"
@@ -23,7 +23,7 @@
             android:background="#EEEEEE">
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/content3"
                 android:layout_width="330dp"
                 android:layout_height="110dp"
                 android:layout_gravity="center"
@@ -36,7 +36,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/title3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -54,12 +54,12 @@
         android:id="@+id/frameLayout3"
         android:layout_width="390dp"
         android:layout_height="190dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
+        android:background="#DDDDDD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout4"
-        android:background="#DDDDDD">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout4">
 
         <FrameLayout
             android:layout_width="380dp"
@@ -68,7 +68,7 @@
             android:background="#EEEEEE">
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/content2"
                 android:layout_width="330dp"
                 android:layout_height="110dp"
                 android:layout_gravity="center"
@@ -81,7 +81,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -100,11 +100,11 @@
         android:layout_width="390dp"
         android:layout_height="190dp"
         android:layout_marginTop="44dp"
+        android:background="#DDDDDD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#DDDDDD">
+        app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
             android:layout_width="380dp"
@@ -113,7 +113,7 @@
             android:background="#EEEEEE">
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/content1"
                 android:layout_width="330dp"
                 android:layout_height="110dp"
                 android:layout_gravity="center"
@@ -126,7 +126,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/title1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

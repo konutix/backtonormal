@@ -32,6 +32,22 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('run 2500 meters',0, (SELECT name FROM activities WHERE name='Reading a book'))")
         db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('meditate for 30 minutes',0, (SELECT name FROM activities WHERE name='Meditation'))")
 
+        db?.execSQL("CREATE TABLE tips (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(256) ,description VARCHAR(512), displayed INTEGER)")
+        db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Healthy sleep', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 0)")
+        db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Slight edge', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 0)")
+        db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Pomodoro', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 0)")
+        db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Stay hydrated', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 0)")
+        db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Positive posture', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 0)")
+        db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Learning new language', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 0)")
+
+        db?.execSQL("CREATE TABLE daily_tasks (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(256),slot INTEGER, complete INTEGER)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Go for a walk', 0, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Pick up a new language', 0, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Tidy your room', 0, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Try a new cooking recipe', 0, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Visit a museum', 0, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Draw something', 0, 0)")
+
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -153,6 +169,52 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         this.writableDatabase.replace("tasks", null, cv)
     }
 
+    fun getTips() : ArrayList<TipInfo>{
+
+        val query = "SELECT id, title, description, displayed FROM tips"
+        var result = this.writableDatabase.rawQuery(query, null)
+
+        val list = ArrayList<TipInfo>()
+        while (result.moveToNext()) {
+            var tip = TipInfo()
+            tip.id = result.getInt(0)
+            tip.title = result.getString(1)
+            tip.content = result.getString(2)
+            tip.displayed = result.getInt(3)
+            list.add(tip)
+        }
+
+        return list
+
+    }
+
+    fun getDaily() : ArrayList<DailyInfo>{
+
+        val query = "SELECT id, title, slot, complete FROM daily_tasks"
+        var result = this.writableDatabase.rawQuery(query, null)
+
+        val list = ArrayList<DailyInfo>()
+        while (result.moveToNext()) {
+            var daily = DailyInfo()
+            daily.id = result.getInt(0)
+            daily.title = result.getString(1)
+            daily.slot = result.getInt(2)
+            daily.completed = result.getInt(3)
+            list.add(daily)
+        }
+
+        return list
+
+    }
+
+    fun changeDailyState(daily_task : DailyInfo, state : Int){
+        var cv = ContentValues()
+        cv.put("id", daily_task.id)
+        cv.put("title", daily_task.title)
+        cv.put("slot", daily_task.slot)
+        cv.put("complete", state)
+        this.writableDatabase.replace("daily_tasks", null, cv)
+    }
 
     fun test() {
         val query = "SELECT * FROM preferences";
