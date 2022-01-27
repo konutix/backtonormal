@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import java.io.*
@@ -95,22 +93,21 @@ class StatsFragment : Fragment() {
             val taskName = view.findViewById<TextView>(R.id.taskName0)
             taskName.text = it.taskName
 
-
             val taskDescription = view.findViewById<TextView>(R.id.textView1)
             taskDescription.text = it.taskDescription
             val taskProgressBar = view.findViewById<ProgressBar>(R.id.progressBar1)
             taskProgressBar.progress = it.progress
             val editTextNumber: EditText = view.findViewById(R.id.editTextNumber1)
-            view.setOnClickListener(object: View.OnClickListener{
+            editTextNumber.setOnClickListener(object: View.OnClickListener{
                 override fun onClick(v: View?) {
                     if(editTextNumber.text.toString() != ""){
-                        taskProgressBar.progress = editTextNumber.text.toString().toInt()
-                        it.progress = taskProgressBar.progress
-                        db.saveTaskToDataBase(it)
+                            taskProgressBar.progress = editTextNumber.text.toString().toInt()
+                            it.progress = taskProgressBar.progress
+                            db.saveTaskToDataBase(it)
 
                     }
                 }
-            })
+            } )
             val id = it.taskId
             val button = view.findViewById<Button>(R.id.statsNameButton)
             button.setOnClickListener(object: View.OnClickListener{

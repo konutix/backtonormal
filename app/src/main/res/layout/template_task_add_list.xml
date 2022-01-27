@@ -81,7 +81,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:importantForAutofill="auto"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:focusableInTouchMode="true"/>
             </FrameLayout>
 
             <ProgressBar
