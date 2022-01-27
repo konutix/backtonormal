@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -93,17 +90,17 @@ class StatsFragment : Fragment() {
 
 
         allTrackedStats.forEach{
-            var view = inflater.inflate(R.layout.template_task_add_list, linearLayout, false)
+            val view = inflater.inflate(R.layout.template_task_add_list, linearLayout, false)
 
-            var taskName = view.findViewById<TextView>(R.id.taskName0)
+            val taskName = view.findViewById<TextView>(R.id.taskName0)
             taskName.text = it.taskName
 
 
-            var taskDescription = view.findViewById<TextView>(R.id.textView1)
+            val taskDescription = view.findViewById<TextView>(R.id.textView1)
             taskDescription.text = it.taskDescription
-            var taskProgressBar = view.findViewById<ProgressBar>(R.id.progressBar1)
+            val taskProgressBar = view.findViewById<ProgressBar>(R.id.progressBar1)
             taskProgressBar.progress = it.progress
-            var editTextNumber: EditText = view.findViewById(R.id.editTextNumber1)
+            val editTextNumber: EditText = view.findViewById(R.id.editTextNumber1)
             view.setOnClickListener(object: View.OnClickListener{
                 override fun onClick(v: View?) {
                     if(editTextNumber.text.toString() != ""){
@@ -115,13 +112,18 @@ class StatsFragment : Fragment() {
                 }
             })
             val id = it.taskId
-            taskName.setOnClickListener(object: View.OnClickListener{
+            val button = view.findViewById<Button>(R.id.statsNameButton)
+            button.setOnClickListener(object: View.OnClickListener{
                 override fun onClick(v: View?){
                     navc = Navigation.findNavController(v!!)
                     val bundle = bundleOf("activityId" to id)
                     navc?.navigate(R.id.action_statsFragment_to_activitiesFragment, bundle)
                 }
             })
+//            button.setOnClickListener{
+//                val bundle = bundleOf("activityId" to id)
+//                navc?.navigate(R.id.action_statsFragment_to_activitiesFragment, bundle)
+//            }
 
 
 

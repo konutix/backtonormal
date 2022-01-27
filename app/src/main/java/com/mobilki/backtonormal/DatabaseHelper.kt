@@ -1,3 +1,4 @@
+
 package com.mobilki.backtonormal
 
 import android.content.ContentValues
@@ -28,8 +29,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
         db?.execSQL("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT,task VARCHAR(256) ,task_description VARCHAR(256) UNIQUE, progress INTEGER,task_id integer, FOREIGN KEY(task) REFERENCES activities(name), FOREIGN KEY(task_id) REFERENCES activities(id))")
         db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('do 100 repeats',0, (SELECT name FROM activities WHERE name='Push ups'), (SELECT id FROM activities WHERE name='Push ups'))")
-        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('read 25 pages',0, (SELECT name FROM activities WHERE name='Running'), (SELECT id FROM activities WHERE name='Running'))")
-        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('run 2500 meters',0, (SELECT name FROM activities WHERE name='Reading a book'), (SELECT id FROM activities WHERE name='Reading a book'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('run 2500 meters',0, (SELECT name FROM activities WHERE name='Running'), (SELECT id FROM activities WHERE name='Running'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('read 25 pages',0, (SELECT name FROM activities WHERE name='Reading a book'), (SELECT id FROM activities WHERE name='Reading a book'))")
         db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('meditate for 30 minutes',0, (SELECT name FROM activities WHERE name='Meditation'), (SELECT id FROM activities WHERE name='Meditation'))")
         db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('listening to the audiobook for 30 minutes ',0, (SELECT name FROM activities WHERE name='Listening to an audiobook'), (SELECT id FROM activities WHERE name='Listening to an audiobook'))")
 
@@ -168,14 +169,15 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return list;
     }
     fun getTask(id : Int) : StatsInfo? {
-        val query = "SELECT A.task, A.task_description, A.progress FROM tasks as A WHERE A.id = $id"
+        val query = "SELECT A.id ,A.task, A.task_description, A.progress FROM tasks as A WHERE A.task_id = $id"
         var result = this.writableDatabase.rawQuery(query, null)
         if (result.moveToNext()) {
             var info = StatsInfo()
-            info.id = id
-            info.taskName = result.getString(0)
-            info.taskDescription = result.getString(1)
-            info.progress = result.getInt(2)
+            info.id = result.getInt(0)
+            info.taskName = result.getString(1)
+            info.taskDescription = result.getString(2)
+            info.progress = result.getInt(3)
+            info.taskId = id
             return info
         }
         return null

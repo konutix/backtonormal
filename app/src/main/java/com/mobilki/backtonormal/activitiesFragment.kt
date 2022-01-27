@@ -67,13 +67,16 @@ class activitiesFragment : Fragment() {
         val switchPrefer = view.findViewById<Switch>(R.id.switchPrefer)
         val switchTask = view.findViewById<Switch>(R.id.switchTask)
         switchPrefer.isChecked = db!!.isPreferred(activityInfo!!.id)
-        switchTask.isChecked = db!!.isTracked(taskInfo!!.id)
+        switchTask.isChecked = db!!.isTracked(taskInfo!!.taskId)
         switchPrefer.setOnCheckedChangeListener { _, isChecked ->
             val err = db!!.preferActivity(activityInfo!!.id, isChecked)
             db!!.test()
         }
         switchTask.setOnCheckedChangeListener { _, isChecked ->
-            val errTask = db!!.preferTask(taskInfo!!.id, isChecked)
+            taskInfo!!.progress = 0
+            db!!.saveTaskToDataBase(taskInfo!!)
+            val errTask = db!!.preferTask(taskInfo!!.taskId, isChecked)
+
             db!!.test()
         }
     }
