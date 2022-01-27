@@ -108,7 +108,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
     fun getPreferredActivities() : ArrayList<ActivityInfo> {
-        val query = "SELECT A.id, A.name FROM preferences as B LEFT JOIN activities as a on A.id=B.activity WHERE B.preferred=1;"
+        val query = "SELECT A.id, A.name, C.name FROM preferences as B LEFT JOIN activities as a on A.id=B.activity JOIN categories as C ON A.category=C.id WHERE B.preferred=1;"
         var result = this.writableDatabase.rawQuery(query, null)
 
         val list = ArrayList<ActivityInfo>()
@@ -116,7 +116,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             var info = ActivityInfo()
             info.id = result.getInt(0)
             info.name = result.getString(1)
-
+            info.cat = result.getString(2)
             list.add(info)
         }
 

@@ -35,8 +35,8 @@
                 android:textColor="#03A9F4"
                 android:textSize="11sp" />
 
-            <TextView
-                android:id="@+id/textView"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/categoryFilter"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:drawableEnd="?android:actionModeWebSearchDrawable"
-                android:hint="Search for an activity"/>
+                android:hint="Search for an activity"
+                android:id="@+id/addActivitySearchText"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -74,6 +75,13 @@
                 android:textColor="#03A9F4"
                 android:textSize="11sp" />
 
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listViewActivities">
+
+
+            </ListView>
             <!--            <FrameLayout-->
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="wrap_content"-->

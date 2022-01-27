@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
@@ -59,24 +56,44 @@ class activityList : Fragment(), View.OnClickListener {
         val db = DatabaseHelper(requireContext())
         val allActivities = db.getPreferredActivities()
 
-        val linearLayout = view.findViewById<LinearLayout>(R.id.activityListLinearLayout)
-        val inflater = LayoutInflater.from(requireContext())
+        val listView = view.findViewById<ListView>(R.id.listViewActivities)
+        val adapter = ListRowAdapter(requireContext(), allActivities, android.R.layout.simple_list_item_1, navc!!, R.id.action_activityList_to_activitiesFragment)
 
-        allActivities.forEach {
+        listView.adapter = adapter
 
-            val view = inflater.inflate(R.layout.template_activity_preferred_list_row, linearLayout, false)
+        val list = listOf("All") + db.getActivityCategories()
 
-            val activityNameButton = view.findViewById<Button>(R.id.activityButton1)
-            activityNameButton.text = it.name
+        val categoryFilter = view.findViewById<Spinner>(R.id.categoryFilter)
+        categoryFilter.adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, list)
 
-            val id = it.id
-            activityNameButton.setOnClickListener {
-                val bundle = bundleOf("activityId" to id)
-                navc?.navigate(R.id.action_activityList_to_activitiesFragment, bundle)
+        categoryFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>, p1: View?, p2: Int, p3: Long) {
+                adapter.searchCategory(p0.getItemAtPosition(p2).toString())
             }
 
-            linearLayout.addView(view)
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
         }
+
+//        val linearLayout = view.findViewById<LinearLayout>(R.id.activityListLinearLayout)
+//        val inflater = LayoutInflater.from(requireContext())
+//
+//        allActivities.forEach {
+//
+//            val view = inflater.inflate(R.layout.template_activity_preferred_list_row, linearLayout, false)
+//
+//            val activityNameButton = view.findViewById<Button>(R.id.activityButton1)
+//            activityNameButton.text = it.name
+//
+//            val id = it.id
+//            activityNameButton.setOnClickListener {
+//                val bundle = bundleOf("activityId" to id)
+//                navc?.navigate(R.id.action_activityList_to_activitiesFragment, bundle)
+//            }
+//
+//            linearLayout.addView(view)
+//        }
     }
 
     override fun onClick(p0: View?) {
