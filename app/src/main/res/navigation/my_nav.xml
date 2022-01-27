@@ -28,7 +28,11 @@
         android:id="@+id/statsFragment"
         android:name="com.mobilki.backtonormal.StatsFragment"
         android:label="fragment_stats"
-        tools:layout="@layout/fragment_stats" />
+        tools:layout="@layout/fragment_stats" >
+        <action
+            android:id="@+id/action_statsFragment_to_activitiesFragment"
+            app:destination="@id/activitiesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/activityList"
         android:name="com.mobilki.backtonormal.activityList"

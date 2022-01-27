@@ -26,6 +26,7 @@ class activitiesFragment : Fragment() {
     private var param2: String? = null
 
     var activityInfo : ActivityInfo ?= null
+    var taskInfo : StatsInfo ?= null
     var db : DatabaseHelper ?= null
 
 
@@ -35,6 +36,7 @@ class activitiesFragment : Fragment() {
         val id = arguments?.getInt("activityId")
         db = DatabaseHelper(requireContext())
         activityInfo = db!!.getActivity(id!!)
+        taskInfo = db!!.getTask(id!!)
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -63,9 +65,15 @@ class activitiesFragment : Fragment() {
 
 
         val switchPrefer = view.findViewById<Switch>(R.id.switchPrefer)
+        val switchTask = view.findViewById<Switch>(R.id.switchTask)
         switchPrefer.isChecked = db!!.isPreferred(activityInfo!!.id)
+        switchTask.isChecked = db!!.isTracked(taskInfo!!.id)
         switchPrefer.setOnCheckedChangeListener { _, isChecked ->
             val err = db!!.preferActivity(activityInfo!!.id, isChecked)
+            db!!.test()
+        }
+        switchTask.setOnCheckedChangeListener { _, isChecked ->
+            val errTask = db!!.preferTask(taskInfo!!.id, isChecked)
             db!!.test()
         }
     }

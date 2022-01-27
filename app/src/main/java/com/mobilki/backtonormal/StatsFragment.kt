@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.navigation.NavController
@@ -30,6 +31,7 @@ class StatsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var navc: NavController?= null
 //    var navc: NavController?= null
 //    var statsInfo : StatsInfo ?= null
 //    var db : DatabaseHelper ?= null
@@ -38,13 +40,10 @@ class StatsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val myText: TextView
         super.onCreate(savedInstanceState)
-
 //        val id = arguments?.getInt("statsId")
 //
 //        db = DatabaseHelper(requireContext())
 //        statsInfo = db!!.getTask(id!!)
-
-
         arguments?.let {
 
             param1 = it.getString(ARG_PARAM1)
@@ -86,19 +85,21 @@ class StatsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        navc = Navigation.findNavController(view)
 
         var db = DatabaseHelper(requireContext())
-        val allStats = db.getAllTasks()
+        val allTrackedStats = db.getAllTrackedTasks()
         val linearLayout = view.findViewById<LinearLayout>(R.id.addTask)
         val inflater = LayoutInflater.from(requireContext())
 
 
-        allStats.forEach{
+        allTrackedStats.forEach{
             var view = inflater.inflate(R.layout.template_task_add_list, linearLayout, false)
 
             var taskName = view.findViewById<TextView>(R.id.taskName0)
             taskName.text = it.taskName
+            val id = it.id
+
+
             var taskDescription = view.findViewById<TextView>(R.id.textView1)
             taskDescription.text = it.taskDescription
             var taskProgressBar = view.findViewById<ProgressBar>(R.id.progressBar1)
@@ -114,6 +115,16 @@ class StatsFragment : Fragment() {
                     }
                 }
             })
+            taskName.setOnClickListener(object: View.OnClickListener{
+                override fun onClick(v: View?){
+                    navc = Navigation.findNavController(v!!)
+                    val bundle = bundleOf("activityId" to id)
+                    navc?.navigate(R.id.action_statsFragment_to_activitiesFragment, bundle)
+                }
+            })
+
+
+
             println(it.progress)
             linearLayout.addView(view)
         }

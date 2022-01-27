@@ -26,11 +26,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
         db?.execSQL("CREATE TABLE preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, activity INTEGER UNIQUE, preferred INTEGER, FOREIGN KEY(activity) REFERENCES activities(id))")
 
-        db?.execSQL("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT,task VARCHAR(256) ,task_description VARCHAR(256) UNIQUE, progress INTEGER, FOREIGN KEY(task) REFERENCES activities(name))")
-        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('do 100 repeats',0, (SELECT name FROM activities WHERE name='Push ups'))")
-        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('read 25 pages',0, (SELECT name FROM activities WHERE name='Running'))")
-        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('run 2500 meters',0, (SELECT name FROM activities WHERE name='Reading a book'))")
-        db?.execSQL("INSERT INTO tasks(task_description, progress, task) VALUES ('meditate for 30 minutes',0, (SELECT name FROM activities WHERE name='Meditation'))")
+        db?.execSQL("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT,task VARCHAR(256) ,task_description VARCHAR(256) UNIQUE, progress INTEGER,task_id integer, FOREIGN KEY(task) REFERENCES activities(name), FOREIGN KEY(task_id) REFERENCES activities(id))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('do 100 repeats',0, (SELECT name FROM activities WHERE name='Push ups'), (SELECT id FROM activities WHERE name='Push ups'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('read 25 pages',0, (SELECT name FROM activities WHERE name='Running'), (SELECT id FROM activities WHERE name='Running'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('run 2500 meters',0, (SELECT name FROM activities WHERE name='Reading a book'), (SELECT id FROM activities WHERE name='Reading a book'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('meditate for 30 minutes',0, (SELECT name FROM activities WHERE name='Meditation'), (SELECT id FROM activities WHERE name='Meditation'))")
+        db?.execSQL("INSERT INTO tasks(task_description, progress, task, task_id) VALUES ('listening to the audiobook for 30 minutes ',0, (SELECT name FROM activities WHERE name='Listening to an audiobook'), (SELECT id FROM activities WHERE name='Listening to an audiobook'))")
 
         db?.execSQL("CREATE TABLE tips (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(256) ,description VARCHAR(512), displayed INTEGER)")
         db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Healthy sleep', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 0)")
@@ -47,6 +48,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Try a new cooking recipe', 0, 0)")
         db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Visit a museum', 0, 0)")
         db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Draw something', 0, 0)")
+
+        db?.execSQL("CREATE TABLE task_selected (id INTEGER PRIMARY KEY AUTOINCREMENT,task_number INTEGER UNIQUE,chosen INTEGER,FOREIGN KEY(task_number) REFERENCES activities(id));")
 
     }
 
@@ -146,10 +149,26 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         }
         return list;
     }
-    fun getTask(id : Int) : StatsInfo? {
-        val query = "SELECT A.task, A.task_description, A.progress FROM tasks as A"
+    fun getAllTrackedTasks(): ArrayList<StatsInfo> {
+        //val query = "SELECT A.id, A.task, A.task_description, A.progress FROM tasks as A LEFT JOIN task_selected as B on A.task_id=B.task_number WHERE B.chosen=1;"
+        val query = "SELECT B.task_number, A.task, A.task_description, A.progress  FROM tasks as A LEFT JOIN task_selected as B on A.task_id=B.task_number WHERE B.chosen=1;"
+//        val query = "SELECT B.task_number, A.task, A.task_description, A.progress FROM task_selected as B LEFT JOIN tasks as A on A.task_id=B.task_number WHERE B.chosen=1;"
         var result = this.writableDatabase.rawQuery(query, null)
 
+        val list = ArrayList<StatsInfo>()
+        while (result.moveToNext()) {
+            var info = StatsInfo()
+            info.id = result.getInt(0)
+            info.taskName = result.getString(1)
+            info.taskDescription = result.getString(2)
+            info.progress = result.getInt(3)
+            list.add(info)
+        }
+        return list;
+    }
+    fun getTask(id : Int) : StatsInfo? {
+        val query = "SELECT A.task, A.task_description, A.progress FROM tasks as A WHERE A.id = $id"
+        var result = this.writableDatabase.rawQuery(query, null)
         if (result.moveToNext()) {
             var info = StatsInfo()
             info.id = id
@@ -160,13 +179,31 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         }
         return null
     }
+    fun isTracked(id : Int) : Boolean {
+        val query = "SELECT chosen FROM task_selected  WHERE task_number=$id"
+        var result = this.writableDatabase.rawQuery(query, null)
+        if (result.count < 1) {
+            return false
+        }
+
+        result.moveToNext()
+        return result.getInt(0) == 1
+    }
     fun saveTaskToDataBase(statsInfo : StatsInfo){
         var cv = ContentValues()
-        cv.put("id",statsInfo.id)
+        var cv1 = ContentValues()
+//        cv1.put("task_number",statsInfo.id)
         cv.put("task", statsInfo.taskName)
         cv.put("task_description", statsInfo.taskDescription)
         cv.put("progress", statsInfo.progress)
         this.writableDatabase.replace("tasks", null, cv)
+//        this.writableDatabase.replace("task_selected", null, cv1)
+    }
+    fun preferTask(id : Int, chosen : Boolean) : Long {
+        var cv = ContentValues()
+        cv.put("task_number", id)
+        cv.put("chosen", chosen)
+        return this.writableDatabase.replace("task_selected", null, cv)
     }
 
     fun getTips() : ArrayList<TipInfo>{
