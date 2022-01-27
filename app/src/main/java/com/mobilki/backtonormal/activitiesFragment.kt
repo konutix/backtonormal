@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
@@ -79,6 +80,9 @@ class activitiesFragment : Fragment() {
 
             db!!.test()
         }
+
+        val image = view.findViewById<ImageView>(R.id.imageActivity)
+        image.setImageResource(R.drawable.running)
     }
 
     companion object {

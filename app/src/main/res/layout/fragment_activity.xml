@@ -91,7 +91,7 @@
                     android:id="@+id/textViewQuote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='"Motywacyjny cytat o aktywności. Lorem Ipsum i tak dalej"'
+                    android:text='"Only he who can see the invisible can do the impossible"'
                     android:textAlignment="viewStart"
                     android:textAllCaps="false"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Autor Cytatu"
+                    android:text="Frank L. Gaines"
                     android:textAlignment="textEnd"
                     android:textColor="#03A9F4"
                     android:textStyle="italic" />
