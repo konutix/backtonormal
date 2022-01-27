@@ -97,7 +97,6 @@ class StatsFragment : Fragment() {
 
             var taskName = view.findViewById<TextView>(R.id.taskName0)
             taskName.text = it.taskName
-            val id = it.id
 
 
             var taskDescription = view.findViewById<TextView>(R.id.textView1)
@@ -115,6 +114,7 @@ class StatsFragment : Fragment() {
                     }
                 }
             })
+            val id = it.taskId
             taskName.setOnClickListener(object: View.OnClickListener{
                 override fun onClick(v: View?){
                     navc = Navigation.findNavController(v!!)

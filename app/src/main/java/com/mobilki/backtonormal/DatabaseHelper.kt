@@ -151,7 +151,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
     fun getAllTrackedTasks(): ArrayList<StatsInfo> {
         //val query = "SELECT A.id, A.task, A.task_description, A.progress FROM tasks as A LEFT JOIN task_selected as B on A.task_id=B.task_number WHERE B.chosen=1;"
-        val query = "SELECT B.task_number, A.task, A.task_description, A.progress  FROM tasks as A LEFT JOIN task_selected as B on A.task_id=B.task_number WHERE B.chosen=1;"
+        val query = "SELECT A.id, A.task, A.task_description, A.progress, A.task_id  FROM tasks as A LEFT JOIN task_selected as B on A.task_id=B.task_number WHERE B.chosen=1;"
 //        val query = "SELECT B.task_number, A.task, A.task_description, A.progress FROM task_selected as B LEFT JOIN tasks as A on A.task_id=B.task_number WHERE B.chosen=1;"
         var result = this.writableDatabase.rawQuery(query, null)
 
@@ -162,6 +162,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             info.taskName = result.getString(1)
             info.taskDescription = result.getString(2)
             info.progress = result.getInt(3)
+            info.taskId = result.getInt(4)
             list.add(info)
         }
         return list;
@@ -191,11 +192,11 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
     fun saveTaskToDataBase(statsInfo : StatsInfo){
         var cv = ContentValues()
-        var cv1 = ContentValues()
-//        cv1.put("task_number",statsInfo.id)
+        cv.put("id",statsInfo.id)
         cv.put("task", statsInfo.taskName)
         cv.put("task_description", statsInfo.taskDescription)
         cv.put("progress", statsInfo.progress)
+        cv.put("task_id", statsInfo.taskId)
         this.writableDatabase.replace("tasks", null, cv)
 //        this.writableDatabase.replace("task_selected", null, cv1)
     }

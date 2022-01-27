@@ -5,4 +5,5 @@ class StatsInfo {
     var taskName : String = ""
     var taskDescription : String = ""
     var progress : Int = 0
+    var taskId : Int = 0
 }
