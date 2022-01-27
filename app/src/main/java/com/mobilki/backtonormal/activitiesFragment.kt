@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,7 +80,13 @@ class activitiesFragment : Fragment() {
         }
 
         val image = view.findViewById<ImageView>(R.id.imageActivity)
-        image.setImageResource(R.drawable.running)
+        val imageId = resources.getIdentifier("@drawable/" + activityInfo!!.name.lowercase().replace(' ', '_'), null, requireContext().packageName)
+        image.setImageResource(
+            if (imageId == 0)
+                R.drawable.generic_sport_image
+            else
+                imageId
+        )
     }
 
     companion object {
