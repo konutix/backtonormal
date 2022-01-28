@@ -31,6 +31,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                android:textColor="@color/design_default_color_on_secondary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -43,6 +44,7 @@
                 android:layout_marginBottom="60dp"
                 android:gravity="center"
                 android:text="Learning new language"
+                android:textColor="@color/design_default_color_on_secondary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -76,6 +78,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                android:textColor="@color/design_default_color_on_secondary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -88,6 +91,7 @@
                 android:layout_marginBottom="60dp"
                 android:gravity="center"
                 android:text="Slight Edge"
+                android:textColor="@color/design_default_color_on_secondary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -121,6 +125,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                android:textColor="@color/design_default_color_on_secondary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -133,6 +138,7 @@
                 android:layout_marginBottom="60dp"
                 android:gravity="center"
                 android:text="Healthy sleep"
+                android:textColor="@color/design_default_color_on_secondary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />

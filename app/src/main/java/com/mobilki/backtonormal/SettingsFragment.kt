@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +39,29 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        val switchBackGroundColour = view.findViewById<SwitchCompat>(R.id.switchBackgroundColor)
+
+
+        switchBackGroundColour.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+
+
+
+
+
+    }
+
 
     companion object {
         /**
