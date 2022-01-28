@@ -10,9 +10,12 @@
         android:id="@+id/frameLayout1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="100dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView1"
@@ -27,7 +30,7 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchBackgroundColor"
-            android:layout_width="match_parent"
+            android:layout_width="359dp"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
             android:paddingEnd="15dp"
@@ -38,9 +41,12 @@
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="35dp"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout1"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout1">
 
         <TextView
             android:id="@+id/textView2"
@@ -55,7 +61,7 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchRunBackground"
-            android:layout_width="match_parent"
+            android:layout_width="361dp"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
             android:paddingEnd="15dp" />
@@ -66,9 +72,12 @@
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="35dp"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2">
 
         <TextView
             android:id="@+id/textView3"
@@ -83,10 +92,10 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchDisplayNotifications"
-            android:layout_width="match_parent"
+            android:layout_width="362dp"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
-            android:paddingEnd="15dp"/>
+            android:paddingEnd="15dp" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
