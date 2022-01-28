@@ -255,14 +255,4 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         cv.put("complete", state)
         this.writableDatabase.replace("daily_tasks", null, cv)
     }
-
-    fun test() {
-        val query = "SELECT * FROM preferences";
-        var result = this.writableDatabase.rawQuery(query, null)
-
-        while (result.moveToNext()) {
-            val str = "Num: " + result.count + " Results: " +result.getInt(0) + " " + result.getInt(1) + " " + result.getInt(2)
-            println(str)
-        }
-    }
 }

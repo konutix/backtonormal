@@ -69,14 +69,12 @@ class activitiesFragment : Fragment() {
         switchTask.isChecked = db!!.isTracked(taskInfo!!.taskId)
         switchPrefer.setOnCheckedChangeListener { _, isChecked ->
             val err = db!!.preferActivity(activityInfo!!.id, isChecked)
-            db!!.test()
         }
         switchTask.setOnCheckedChangeListener { _, isChecked ->
             taskInfo!!.progress = 0
             db!!.saveTaskToDataBase(taskInfo!!)
             val errTask = db!!.preferTask(taskInfo!!.taskId, isChecked)
 
-            db!!.test()
         }
 
         val image = view.findViewById<ImageView>(R.id.imageActivity)

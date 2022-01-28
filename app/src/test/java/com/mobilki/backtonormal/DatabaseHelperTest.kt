@@ -61,9 +61,10 @@ class DatabaseHelperTest {
     fun tasksTest() {
         val list = database.getAllActivities()
         val tasks = database.getAllTasks()
+        val statsInfo: StatsInfo = tasks[0]
         assertEquals(tasks.size, 5)
         assertEquals(database.getAllTrackedTasks().size, 0)
-
+        assertFalse(database.isTracked(0))
         assertNull(database.getTask(-1))
 
         database.preferTask(list[0].id, true)
@@ -74,5 +75,30 @@ class DatabaseHelperTest {
         assertEquals(database.isTracked(list[0].id), false)
 
         assertEquals(tasks[0].id, database.getTask(tasks[0].id)!!.taskId)
+
+        statsInfo.progress = 20
+        database.saveTaskToDataBase(statsInfo)
+        assertEquals(tasks[0].progress,20)
+
     }
+    @Test
+    fun DailyTest(){
+        val daily = database.getDaily()
+        assertEquals(daily.size,6)
+        val daily1Id : DailyInfo = daily.get(0)
+        database.changeDailyState(daily1Id,0)
+        assertEquals(daily.get(0).completed,0)
+        assertEquals(daily1Id.completed,0)
+
+    }
+    @Test
+    fun TipsTest(){
+        val tips = database.getTips()
+        val tip : TipInfo = tips[0]
+        assertEquals(tips.size,6)
+        assertEquals(tip.id,1)
+    }
+
+
+
 }
