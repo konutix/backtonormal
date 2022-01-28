@@ -5,6 +5,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java.text.DateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 const val DATABASE_NAME = "ActivityDB"
@@ -43,12 +46,19 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db?.execSQL("INSERT INTO tips(title, description, displayed) VALUES ('Learning new languages', 'Trying a new language is a lot of fun plus it is a great exercise for your brain.', 0)")
 
         db?.execSQL("CREATE TABLE daily_tasks (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(256),slot INTEGER, complete INTEGER)")
-        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Go for a walk', 0, 0)")
-        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Pick up a new language', 0, 0)")
-        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Tidy your room', 0, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Go for a walk', 1, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Pick up a new language', 2, 0)")
+        db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Tidy your room', 3, 0)")
         db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Try a new cooking recipe', 0, 0)")
         db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Visit a museum', 0, 0)")
         db?.execSQL("INSERT INTO daily_tasks(title, slot, complete) VALUES ('Draw something', 0, 0)")
+
+        db?.execSQL("CREATE TABLE last_login (id INTEGER PRIMARY KEY AUTOINCREMENT, day VARCHAR(256))")
+
+        val calendar = Calendar.getInstance()
+        val day = DateFormat.getDateInstance(DateFormat.DEFAULT).format(calendar.time)
+
+        db?.execSQL("INSERT INTO last_login(id, day) VALUES (1, '$day')")
 
         db?.execSQL("CREATE TABLE task_selected (id INTEGER PRIMARY KEY AUTOINCREMENT,task_number INTEGER UNIQUE,chosen INTEGER,FOREIGN KEY(task_number) REFERENCES activities(id));")
 
@@ -228,9 +238,74 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     }
 
-    fun getDaily() : ArrayList<DailyInfo>{
+    fun drawDaily(){
 
         val query = "SELECT id, title, slot, complete FROM daily_tasks"
+        var result = this.writableDatabase.rawQuery(query, null)
+
+        val list = ArrayList<DailyInfo>()
+        while (result.moveToNext()) {
+            var daily = DailyInfo()
+            daily.id = result.getInt(0)
+            daily.title = result.getString(1)
+            daily.slot = result.getInt(2)
+            daily.completed = result.getInt(3)
+            list.add(daily)
+        }
+
+        list.shuffle()
+
+        var i = 0;
+
+        while(i < 3) {
+            var cv = ContentValues()
+            cv.put("id", list.get(i).id)
+            cv.put("slot", i+1)
+            cv.put("title", list.get(i).title)
+            cv.put("complete", 0)
+            this.writableDatabase.replace("daily_tasks", null, cv)
+            i++
+        }
+        while(i < list.size) {
+            var cv = ContentValues()
+            cv.put("id", list.get(i).id)
+            cv.put("slot", 0)
+            cv.put("title", list.get(i).title)
+            cv.put("complete", 0)
+            this.writableDatabase.replace("daily_tasks", null, cv)
+            i++
+        }
+
+    }
+
+    fun getLastLogin() : String{
+
+        val query = "SELECT day FROM last_login"
+        var result = this.writableDatabase.rawQuery(query, null)
+
+        result.moveToNext()
+
+        return result.getString(0)
+
+    }
+
+    fun setLastLogin(){
+
+        var cv = ContentValues()
+
+        val calendar = Calendar.getInstance()
+        val day = DateFormat.getDateInstance(DateFormat.DEFAULT).format(calendar.time)
+
+        cv.put("id", 1)
+        cv.put("day", day)
+
+        this.writableDatabase.replace("last_login", null, cv)
+
+    }
+
+    fun getDaily() : ArrayList<DailyInfo>{
+
+        val query = "SELECT id, title, slot, complete FROM daily_tasks WHERE slot > 0"
         var result = this.writableDatabase.rawQuery(query, null)
 
         val list = ArrayList<DailyInfo>()

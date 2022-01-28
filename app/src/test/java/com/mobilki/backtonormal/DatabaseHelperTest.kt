@@ -84,7 +84,7 @@ class DatabaseHelperTest {
     @Test
     fun DailyTest(){
         val daily = database.getDaily()
-        assertEquals(daily.size,6)
+        assertEquals(daily.size,3)
         val daily1Id : DailyInfo = daily.get(0)
         database.changeDailyState(daily1Id,0)
         assertEquals(daily.get(0).completed,0)

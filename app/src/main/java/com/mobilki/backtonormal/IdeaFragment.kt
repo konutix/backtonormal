@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import java.text.DateFormat
+import java.util.*
 import kotlin.random.Random
 
 // TODO: Rename parameter arguments, choose names that match
@@ -68,6 +70,18 @@ class IdeaFragment : Fragment() {
             navc.navigate(R.id.action_ideaFragment_to_activitiesFragment, bundle)
         }
 
+        val lastDay = db.getLastLogin()
+
+        val calendar = Calendar.getInstance()
+        val day = DateFormat.getDateInstance(DateFormat.DEFAULT).format(calendar.time)
+
+        if(lastDay != day){
+
+            db.drawDaily()
+            db.setLastLogin()
+
+        }
+
         val allDaily = db.getDaily()
 
         val daily1 = view.findViewById<CheckBox>(R.id.daily1)
@@ -82,12 +96,9 @@ class IdeaFragment : Fragment() {
         daily2.isChecked = allDaily.get(1).completed == 1
         val daily2Id = allDaily.get(1)
 
-
         daily3.text = allDaily.get(2).title
         daily3.isChecked = allDaily.get(2).completed == 1
         val daily3Id = allDaily.get(2)
-
-
 
         daily1.setOnCheckedChangeListener { buttonView, isChecked ->
 
